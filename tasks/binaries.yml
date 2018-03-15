@@ -9,7 +9,7 @@
   get_url:
     url: "http://repo1.maven.org/maven2/org/clojure/clojure/{{item}}/clojure-{{item}}.zip"
     dest: "/tmp/clojure-{{item}}.zip"
-  with_items: clojure_versions
+  with_items: "{{ clojure_versions }}"
 
 - name: Clojure | Make sure the directory to hold the Clojure binaries is present
   file:
@@ -18,7 +18,7 @@
 
 - name: Clojure | Unpack the compressed clojure binaries
   command: unzip /tmp/clojure-{{item}}.zip chdir=/usr/local/clojure creates=/usr/local/clojure/clojure-{{item}}
-  with_items: clojure_versions
+  with_items: "{{ clojure_versions }}"
 
 - name: Clojure | Set the directory rights
   file:
@@ -28,7 +28,7 @@
     group: root
     mode: 0755
     recurse: yes
-  with_items: clojure_versions
+  with_items: "{{ clojure_versions }}"
 
 - name: Clojure | Create a symlink for the clojure jar
   file:
@@ -36,7 +36,7 @@
     src: "/usr/local/clojure/clojure-{{item}}/clojure-{{item}}.jar"
     state: link
     force: yes
-  with_items: clojure_versions
+  with_items: "{{ clojure_versions }}"
 
 - name: Clojure | Update the symbolic link to the default clojure version
   file:
